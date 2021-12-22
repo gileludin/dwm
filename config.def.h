@@ -6,6 +6,8 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static int floatposgrid_x           = 5;        /* float grid columns */
+static int floatposgrid_y           = 5;        /* float grid rows */
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
@@ -28,13 +30,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title            tags mask  isfloating  isterminal CenterThisWindow?  noswallow  monitor  scratch key*/
-	{ "Gimp",     NULL,       NULL,            0,         1,          0,         0,                 0,        -1,      0  },
-	{ "Firefox",  NULL,       NULL,            1 << 8,    0,          0,         0,                -1,        -1,      0  },
-	{ "St",       NULL,       NULL,            0,         0,          1,         1,                 0,        -1,      0  },
-	{ NULL,       NULL,       "Event Tester",  0,         0,          0,         0,                 1,        -1,      0  }, /* xev */
-	{ NULL,       NULL,       "scratchpad",    0,         1,          0,         0,                 0,        -1,     't' },
-	{ "broken",   "broken",   NULL,            0,         1,          0,         0,                 0,        -1,     'g' },
+	/* class      instance    title            tags mask  isfloating  floatpos            isterminal CenterThisWindow?  noswallow  monitor  scratch key*/
+	{ "Gimp",     NULL,       NULL,            0,         1,          NULL,               0,         0,                 0,        -1,      0  },
+	{ "Firefox",  NULL,       NULL,            1 << 8,    0,          NULL,               0,         0,                -1,        -1,      0  },
+	{ "St",       NULL,       NULL,            0,         0,          NULL,               1,         1,                 0,        -1,      0  },
+	{ NULL,       NULL,       "Event Tester",  0,         0,          NULL,               0,         0,                 1,        -1,      0  }, /* xev */
+	{ NULL,       NULL,       "scratchpad",    0,         1,          "0x 0y 1920W 250H", 0,         0,                 0,        -1,     't' },
+	{ "broken",   "broken",   NULL,            0,         1,          NULL,               0,         0,                 0,        -1,     'g' },
 };
 
 /* layout(s) */
