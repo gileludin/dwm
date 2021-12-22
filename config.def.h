@@ -76,7 +76,7 @@ static const char *menu_calc[] = { "=",  NULL};
 
 /*First arg only serves to match against key in rules*/
 static const char *spcmd_0[] = { "t", "st", "-t", "scratchpad", NULL}; 
-static const char *spcmd_1[] = { "g", "spotify", NULL};
+static const char *spcmd_1[] = { "g", "spotify.sh", NULL};
 
  Key keys[] = {
 	/* modifier                     key        function        argument */
