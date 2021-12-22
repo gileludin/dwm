@@ -28,11 +28,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title            tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,            0,         1,          0,           0,        -1 },
-	{ "Firefox",  NULL,       NULL,            1 << 8,    0,          0,          -1,        -1 },
-	{ "St",       NULL,       NULL,            0,         0,          1,           0,        -1 },
-	{ NULL,       NULL,       "Event Tester",  0,         0,          0,           1,        -1 }, /* xev */
+	/* class      instance    title            tags mask  isfloating  isterminal  noswallow  monitor  scratch key*/
+	{ "Gimp",     NULL,       NULL,            0,         1,          0,           0,        -1,      0  },
+	{ "Firefox",  NULL,       NULL,            1 << 8,    0,          0,          -1,        -1,      0  },
+	{ "St",       NULL,       NULL,            0,         0,          1,           0,        -1,      0  },
+	{ NULL,       NULL,       "Event Tester",  0,         0,          0,           1,        -1,      0  }, /* xev */
+	{ NULL,       NULL,       "scratchpad",    0,         1,          0,           0,        -1,     't' },
+	{ "broken",   "broken",   NULL,            0,         1,          0,           0,        -1,     'g' },
 };
 
 /* layout(s) */
@@ -56,18 +58,29 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
+#define SCRATCHKEYS(MOD,KEY,CMD) \
+		{ MOD,                             KEY,      togglescratch,     {.v = CMD } }, \
+                { MOD|ControlMask,                 KEY,      setscratch,        {.v = CMD } }, \
+		{ MOD|ControlMask|ShiftMask,       KEY,      removescratch,     {.v = CMD } }, \
+
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[]  = { "dmenu_run", "-m", dmenumon, NULL };
+static const char *termcmd[]   = { "st", NULL };
+static const char *menu_calc[] = { "=",  NULL};
 
-static Key keys[] = {
+/*First arg only serves to match against key in rules*/
+static const char *spcmd_0[] = { "t", "st", "-t", "scratchpad", NULL}; 
+static const char *spcmd_1[] = { "g", "spotify", NULL};
+
+ Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_r,      spawn,          {.v = menu_calc } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -90,6 +103,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
+	SCRATCHKEYS(MODKEY,             XK_grave,                  spcmd_0)
+	SCRATCHKEYS(MODKEY,             XK_g,                      spcmd_1)
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
