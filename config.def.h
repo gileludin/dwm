@@ -30,13 +30,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title            tags mask  isfloating  floatpos            isterminal CenterThisWindow?  noswallow  monitor  scratch key*/
-	{ "Gimp",     NULL,       NULL,            0,         1,          NULL,               0,         0,                 0,        -1,      0  },
-	{ "Firefox",  NULL,       NULL,            1 << 8,    0,          NULL,               0,         0,                -1,        -1,      0  },
-	{ "St",       NULL,       NULL,            0,         0,          NULL,               1,         1,                 0,        -1,      0  },
-	{ NULL,       NULL,       "Event Tester",  0,         0,          NULL,               0,         0,                 1,        -1,      0  }, /* xev */
-	{ NULL,       NULL,       "scratchpad",    0,         1,          "0x 0y 1920W 250H", 0,         0,                 0,        -1,     't' },
-	{ "broken",   "broken",   NULL,            0,         1,          NULL,               0,         0,                 0,        -1,     'g' },
+	/* class      instance    title            tags mask  isfloating  floatpos            isterminal  noswallow  monitor  scratch key*/
+	{ "Gimp",     NULL,       NULL,            0,         1,          NULL,               0,          0,        -1,      0  },
+	{ "Firefox",  NULL,       NULL,            1 << 8,    0,          NULL,               0,         -1,        -1,      0  },
+	{ "St",       NULL,       NULL,            0,         0,          NULL,               1,          0,        -1,      0  },
+	{ NULL,       NULL,       "Event Tester",  0,         0,          NULL,               0,          1,        -1,      0  }, /* xev */
+	{ NULL,       NULL,       "scratchpad",    0,         1,          "0x 0y 1920W 250H", 0,          0,        -1,     't' },
+	{ "broken",   "broken",   NULL,            0,         1,          NULL,               0,          0,        -1,     'g' },
 };
 
 /* layout(s) */

@@ -116,7 +116,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
 	unsigned int tags;
-	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, CenterThisWindow, noswallow;
+	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen, isterminal, noswallow;
 	int ignoresizehints;
 	int beingmoved;
 	char scratchkey;
@@ -173,7 +173,6 @@ typedef struct {
 	int isfloating;
 	const char *floatpos;
 	int isterminal;
-	int CenterThisWindow;
 	int noswallow;
 	int monitor;
 	const char scratchkey;
@@ -360,7 +359,6 @@ applyrules(Client *c)
 
 	/* rule matching */
 	c->isfloating = 0;
-        c->CenterThisWindow = 0;
 	c->tags = 0;
 	c->scratchkey = 0;
 	XGetClassHint(dpy, c->win, &ch);
@@ -376,7 +374,6 @@ applyrules(Client *c)
 			c->isterminal = r->isterminal;
 			c->noswallow  = r->noswallow;
 			c->isfloating = r->isfloating;
-			c->CenterThisWindow = r->CenterThisWindow;
 			c->tags |= r->tags;
 			c->scratchkey = r->scratchkey;
 			for (m = mons; m && m->num != r->monitor; m = m->next);
@@ -2405,13 +2402,6 @@ tile(Monitor *m)
 			if (ty + HEIGHT(c) < m->wh)
 				ty += HEIGHT(c);
 		}
-
-	if (n == 1 && selmon->sel->CenterThisWindow)
-        resizeclient(selmon->sel,
-                (selmon->mw - selmon->mw * 0.5) / 2,
-                (selmon->mh - selmon->mh * 0.5) / 2,
-                selmon->mw * 0.5,
-                selmon->mh * 0.5);
 }
 
 void
